@@ -1,0 +1,29 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+
+    steps:
+      - name: Deploy to Production Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/manish/SavvyTeam
+            git pull origin main
+            docker compose -f docker-compose.production.yml down
+            docker compose -f docker-compose.production.yml build
+            docker compose -f docker-compose.production.yml up -d
+            docker compose -f docker-compose.production.yml run --rm django python manage.py migrate
+            docker compose -f docker-compose.production.yml run --rm django python manage.py collectstatic --noinput
