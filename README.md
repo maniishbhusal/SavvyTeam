@@ -1,97 +1,167 @@
-# SavvyTeam
+# 🚀 SavvyTeam
 
-A Multi-Tenant Subscription-Based Team Knowledge Hub with AI-Powered Search
+> **A Multi-Tenant Subscription-Based Team Knowledge Hub with AI-Powered Search**
+
+SavvyTeam solves the universal problem of scattered team knowledge. Instead of hunting through Slack, Google Docs, and emails, teams can centralize their documents, SOPs, and discussions in one searchable hub with intelligent AI-powered search.
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-License: MIT
+## ✨ Features
 
-## Settings
+### 🔐 **Multi-Tenant Authentication**
+- Email/social login with 2FA support
+- Role-based access control (Admin, Manager, Contributor, Viewer)
+- Organization-based data isolation
 
-Moved to [settings](https://cookiecutter-django.readthedocs.io/en/latest/1-getting-started/settings.html).
+### 📚 **Knowledge Management**
+- Rich-text editor for notes and SOPs
+- Document upload (PDFs, images) with cloud storage
+- Smart tagging and categorization
+- Version control for documents
 
-## Basic Commands
+### 🤖 **AI-Powered Search**
+- Natural language queries ("What's our refund policy?")
+- Intelligent document indexing via background jobs
+- Instant, contextual results
 
-### Setting Up Your Users
+### 💳 **Subscription Management**
+- Stripe integration for payments
+- Tiered pricing (Free → Pro → Enterprise)
+- Automated billing and invoicing
 
-- To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
+### 📊 **Analytics & Insights**
+- Team activity dashboards
+- Search analytics and usage reports
+- Member engagement tracking
 
-- To create a **superuser account**, use this command:
+## 🛠️ Tech Stack
 
-      uv run python manage.py createsuperuser
+- **Backend**: Django 5.0+ with Django REST Framework
+- **Database**: PostgreSQL with full-text search
+- **Cache/Queue**: Redis + Celery for background tasks
+- **Frontend**: Bootstrap 5
+- **Storage**: AWS S3 for file uploads
+- **Payments**: Stripe API
+- **Email**: SendGrid
+- **Deployment**: Docker + Traefik + Let's Encrypt
+- **CI/CD**: GitHub Actions
+- **Monitoring**: Sentry + Prometheus
 
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
+## 🚀 Quick Start
 
-### Type checks
+### Prerequisites
+- Python 3.12+
+- Docker & Docker Compose
+- uv (Python package manager)
 
-Running type checks with mypy:
-
-    uv run mypy savvyteam
-
-### Test coverage
-
-To run the tests, check your test coverage, and generate an HTML coverage report:
-
-    uv run coverage run -m pytest
-    uv run coverage html
-    uv run open htmlcov/index.html
-
-#### Running tests with pytest
-
-    uv run pytest
-
-### Live reloading and Sass CSS compilation
-
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/2-local-development/developing-locally.html#using-webpack-or-gulp).
-
-### Celery
-
-This app comes with Celery.
-
-To run a celery worker:
-
-```bash
-cd savvyteam
-uv run celery -A config.celery_app worker -l info
-```
-
-Please note: For Celery's import magic to work, it is important _where_ the celery commands are run. If you are in the same folder with _manage.py_, you should be right.
-
-To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html), you'll need to start the celery beat scheduler service. You can start it as a standalone process:
+### Local Development
 
 ```bash
-cd savvyteam
-uv run celery -A config.celery_app beat
+# Clone the repository
+git clone https://github.com/maniishbhusal/SavvyTeam.git
+cd SavvyTeam
+
+# Start with Docker
+docker compose -f docker-compose.local.yml up -d
+
+# Create superuser
+docker compose -f docker-compose.local.yml run --rm django python manage.py createsuperuser
+
+# Access the application
+open http://localhost:8000
 ```
 
-or you can embed the beat service inside a worker with the `-B` option (not recommended for production use):
+### Environment Setup
+
+Create environment files:
+```bash
+# Copy example files
+cp .envs/.local/.django.example .envs/.local/.django
+cp .envs/.local/.postgres.example .envs/.local/.postgres
+
+# Edit with your settings
+vim .envs/.local/.django
+```
+
+## 🧪 Testing
 
 ```bash
-cd savvyteam
-uv run celery -A config.celery_app worker -B -l info
+# Run tests
+uv run pytest
+
+# With coverage
+uv run coverage run -m pytest
+uv run coverage html
+
+# Type checking
+uv run mypy savvyteam
+
+# Code formatting
+uv run ruff check .
+uv run ruff format .
 ```
 
-### Email Server
+## 🤝 Contributing
 
-In development, it is often nice to be able to see emails that are being sent from your application. For that reason local SMTP server [Mailpit](https://github.com/axllent/mailpit) with a web interface is available as docker container.
+We welcome contributions! Here's how to get started:
 
-Container mailpit will start automatically when you will run all docker containers.
-Please check [cookiecutter-django Docker documentation](https://cookiecutter-django.readthedocs.io/en/latest/2-local-development/developing-locally-docker.html) for more details how to start all containers.
+### Development Workflow
 
-With Mailpit running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
+1. **Fork & Clone**
+   ```bash
+   git clone https://github.com/maniishbhusal/SavvyTeam.git
+   cd SavvyTeam
+   ```
 
-### Sentry
+2. **Create Feature Branch**
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
 
-Sentry is an error logging aggregator service. You can sign up for a free account at <https://sentry.io/signup/?code=cookiecutter> or download and host it yourself.
-The system is set up with reasonable defaults, including 404 logging and integration with the WSGI application.
+3. **Make Changes**
+   - Follow Django best practices
+   - Add tests for new features
+   - Update documentation
 
-You must set the DSN url in production.
+4. **Run Quality Checks**
+   ```bash
+   pre-commit run --all-files
+   pytest
+   ```
 
-## Deployment
+5. **Submit PR**
+   - Clear description of changes
+   - Link to related issues
+   - Ensure CI passes
 
-The following details how to deploy this application.
+### Code Standards
 
-### Docker
+- **Style**: Ruff for formatting and linting
+- **Tests**: Minimum 80% coverage for new code
+- **Documentation**: Docstrings for all public methods
+- **Commits**: Conventional commit messages
 
-See detailed [cookiecutter-django Docker documentation](https://cookiecutter-django.readthedocs.io/en/latest/3-deployment/deployment-with-docker.html).
+### Areas for Contribution
+
+- 🔍 **AI Search**: Improve search algorithms and relevance
+- 🎨 **UI/UX**: Enhance user interface and experience
+- 📱 **Mobile**: Responsive design improvements
+- 🔌 **Integrations**: Slack, Teams, Google Workspace
+- 🌐 **i18n**: Multi-language support
+- 📊 **Analytics**: Advanced reporting features
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [Cookiecutter Django](https://github.com/cookiecutter/cookiecutter-django)
+- Inspired by the need for better team knowledge management
+- Thanks to all contributors and the Django community
+
+---
+
+**Made with ❤️ for teams who value organized knowledge**
