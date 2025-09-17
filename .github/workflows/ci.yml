@@ -102,5 +102,5 @@ jobs:
             docker compose -f docker-compose.production.yml down
             docker compose -f docker-compose.production.yml build
             docker compose -f docker-compose.production.yml up -d
-            docker compose -f docker-compose.production.yml exec -T django python manage.py migrate
-            docker compose -f docker-compose.production.yml exec -T django python manage.py collectstatic --noinput
+            docker compose -f docker-compose.production.yml run --rm django python manage.py migrate
+            docker compose -f docker-compose.production.yml run --rm django python manage.py collectstatic --noinput
