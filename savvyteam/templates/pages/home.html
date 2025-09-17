@@ -1,7 +1,86 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    This is the home page and it's after the CI/CD Pipeline, which means, Continuous Deployment is working... and it's CI and CD separated in this version... If you see this, CI/CD pipeline works just as expected...
-  </h1>
+  <div class="container-fluid bg-primary text-white py-5 mb-5">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1 class="display-4 fw-bold mb-4">🚀 SavvyTeam</h1>
+          <p class="lead mb-4">Multi-Tenant Subscription-Based Team Knowledge Hub with AI-Powered Search</p>
+          <div class="alert alert-success d-inline-block" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong>CI/CD Pipeline Active!</strong> Deployment successful.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <div class="mb-3">
+              <i class="fas fa-cogs fa-3x text-primary"></i>
+            </div>
+            <h5 class="card-title">Continuous Integration</h5>
+            <p class="card-text">Automated testing and code quality checks ensure reliable deployments.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <div class="mb-3">
+              <i class="fas fa-rocket fa-3x text-success"></i>
+            </div>
+            <h5 class="card-title">Continuous Deployment</h5>
+            <p class="card-text">Seamless deployment pipeline from code commit to production.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <div class="mb-3">
+              <i class="fas fa-search fa-3x text-info"></i>
+            </div>
+            <h5 class="card-title">AI-Powered Search</h5>
+            <p class="card-text">Intelligent knowledge discovery for your team's collective wisdom.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card border-0 bg-light">
+          <div class="card-body">
+            <h3 class="text-center mb-4">Pipeline Status</h3>
+            <div class="row text-center">
+              <div class="col-md-3">
+                <div class="badge bg-success fs-6 p-3 w-100">
+                  <i class="fas fa-check me-2"></i>Code Quality
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="badge bg-success fs-6 p-3 w-100">
+                  <i class="fas fa-check me-2"></i>Tests Passed
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="badge bg-success fs-6 p-3 w-100">
+                  <i class="fas fa-check me-2"></i>Build Success
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="badge bg-success fs-6 p-3 w-100">
+                  <i class="fas fa-check me-2"></i>Deployed
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
