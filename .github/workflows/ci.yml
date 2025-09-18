@@ -10,9 +10,9 @@ on:
     branches: ['main']
     paths-ignore: ['docs/**', 'README.md']
 
-  # push:
-  #   branches: ['main']
-  #   paths-ignore: ['docs/**', 'README.md']
+  push:
+    branches: ['main']
+    paths-ignore: ['docs/**', 'README.md']
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
