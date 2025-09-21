@@ -40,6 +40,14 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self) -> str:
+        # Check if user should be redirected to organization creation
+        if self.request.session.pop("redirect_to_org_creation", False):
+            return reverse("organizations:create")
+
+        # Check if user has any organizations
+        if not self.request.user.memberships.exists():
+            return reverse("organizations:create")
+
         return reverse("users:detail", kwargs={"pk": self.request.user.pk})
 
 

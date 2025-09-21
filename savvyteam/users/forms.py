@@ -35,6 +35,12 @@ class UserSignupForm(SignupForm):
     Check UserSocialSignupForm for accounts created from social.
     """
 
+    def save(self, request):
+        user = super().save(request)
+        # Redirect to organization creation after signup
+        request.session["redirect_to_org_creation"] = True
+        return user
+
 
 class UserSocialSignupForm(SocialSignupForm):
     """

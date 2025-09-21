@@ -19,6 +19,11 @@ urlpatterns = [
     # User management
     path("users/", include("savvyteam.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    # Organizations
+    path(
+        "organizations/",
+        include("savvyteam.organizations.urls", namespace="organizations"),
+    ),
     # Your stuff: custom urls includes go here
     # ...
     # Media files

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+  My Organizations
+{% endblock title %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2>My Organizations</h2>
+          <a href="{% url 'organizations:create' %}" class="btn btn-primary">Create New Organization</a>
+        </div>
+        {% if memberships %}
+          <div class="row">
+            {% for membership in memberships %}
+              <div class="col-md-4 mb-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ membership.organization.name }}</h5>
+                    <p class="card-text">
+                      <small class="text-muted">Role: {{ membership.get_role_display }}</small>
+                      <br />
+                      <small class="text-muted">Joined: {{ membership.joined_at|date:"M d, Y" }}</small>
+                    </p>
+                    {% with domain=membership.organization.domains.first %}
+                      {% if domain %}
+                        {# djlint:off D018 #}
+                        <a href="//{{ domain.domain }}:8000/" class="btn btn-primary btn-sm">Access</a>
+                        {# djlint:on D018 #}
+                      {% endif %}
+                    {% endwith %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="text-center">
+            <p>You don't belong to any organizations yet.</p>
+            <a href="{% url 'organizations:create' %}" class="btn btn-primary">Create Your First Organization</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}
