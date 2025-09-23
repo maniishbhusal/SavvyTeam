@@ -19,6 +19,7 @@ class Organization(TenantMixin):
 
     # default true, schema will be automatically created and synced when it is saved
     auto_create_schema = True
+    auto_drop_schema = True  # Automatically drop schema when organization is deleted
 
     def __str__(self):
         return self.name

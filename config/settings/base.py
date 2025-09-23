@@ -56,40 +56,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ------------------------------------------------------------------------------
 DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
 
-TENANT_MODEL = "organizations.Organization"
-TENANT_DOMAIN_MODEL = "organizations.Domain"
-
 # URLS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "config.urls"
+PUBLIC_SCHEMA_URLCONF = "config.urls_public"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
-
-# APPS
-# ------------------------------------------------------------------------------
-DJANGO_APPS = [
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.sites",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    # "django.contrib.humanize", # Handy template tags
-    "django.contrib.admin",
-    "django.forms",
-]
-THIRD_PARTY_APPS = [
-    "crispy_forms",
-    "crispy_bootstrap5",
-    "django_celery_beat",
-]
-
-LOCAL_APPS = [
-    "savvyteam.users",
-    "savvyteam.organizations",
-    # Your stuff: custom apps go here
-]
 
 # SHARED AND TENANT APPS
 # ------------------------------------------------------------------------------
@@ -109,6 +82,10 @@ SHARED_APPS = (
     "allauth.account",
     "allauth.mfa",
     "allauth.socialaccount",
+    # Third party apps
+    "crispy_forms",
+    "crispy_bootstrap5",
+    "django_celery_beat",
 )
 
 TENANT_APPS = (
@@ -122,11 +99,9 @@ TENANT_APPS = (
 )
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = (
-    list(SHARED_APPS)
-    + [app for app in TENANT_APPS if app not in SHARED_APPS]
-    + THIRD_PARTY_APPS
-)
+INSTALLED_APPS = list(SHARED_APPS) + [
+    app for app in TENANT_APPS if app not in SHARED_APPS
+]
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -179,11 +154,16 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "savvyteam.organizations.middleware.OrganizationMiddleware",
+    # "savvyteam.organizations.middleware.OrganizationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
+
+TENANT_MODEL = "organizations.Organization"
+TENANT_DOMAIN_MODEL = "organizations.Domain"
+# it will display the the public tenant if no tenant is found
+SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
 
 # STATIC
 # ------------------------------------------------------------------------------
