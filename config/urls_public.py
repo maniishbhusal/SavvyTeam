@@ -7,7 +7,10 @@ from django.urls import path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
+from savvyteam.organizations.admin import tenant_admin_site
+
 urlpatterns = [
+    path(settings.TENANT_ADMIN_URL, tenant_admin_site.urls),  # custom tenant admin
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
         "about/",

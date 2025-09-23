@@ -67,8 +67,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 # SHARED AND TENANT APPS
 # ------------------------------------------------------------------------------
 SHARED_APPS = (
+    # Django-tenants required
     "django_tenants",
-    "savvyteam.organizations",
+    # Your global apps
+    "savvyteam.organizations",  # Tenant management
+    "savvyteam.users",  # If users can access multiple tenants
+    # Django core (shared)
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.sessions",
@@ -77,28 +81,29 @@ SHARED_APPS = (
     "django.contrib.admin",
     "django.contrib.staticfiles",
     "django.forms",
-    "savvyteam.users",
+    # Third party (shared)
     "allauth",
     "allauth.account",
     "allauth.mfa",
     "allauth.socialaccount",
-    # Third party apps
     "crispy_forms",
     "crispy_bootstrap5",
     "django_celery_beat",
 )
 
 TENANT_APPS = (
+    # Django core (per tenant)
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.admin",
-    "savvyteam.users",
-    # Add your tenant-specific apps here
+    # Your tenant-specific apps
+    "savvyteam.users",  # If users are per-tenant
+    # Add more tenant apps as you build them
 )
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
+# This is all you need
 INSTALLED_APPS = list(SHARED_APPS) + [
     app for app in TENANT_APPS if app not in SHARED_APPS
 ]
@@ -249,6 +254,7 @@ EMAIL_TIMEOUT = 5
 # ------------------------------------------------------------------------------
 # Django Admin URL.
 ADMIN_URL = "admin/"
+TENANT_ADMIN_URL = "tenant-admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [("""Manish Bhusal""", "manish@theglowtick.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers

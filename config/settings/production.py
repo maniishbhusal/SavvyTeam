@@ -101,6 +101,7 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = EMAIL_SUBJECT_PREFIX
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
 ADMIN_URL = env("DJANGO_ADMIN_URL")
+TENANT_ADMIN_URL = env("DJANGO_TENANT_ADMIN_URL")
 
 # Anymail
 # ------------------------------------------------------------------------------
