@@ -17,6 +17,8 @@ urlpatterns = [
     ),
     # Django Admin for public schema
     path(settings.ADMIN_URL, admin.site.urls),
+    # User management within public schema
+    path("users/", include("savvyteam.users.urls", namespace="users")),
     # Authentication (signup/login)  # noqa: ERA001
     path("accounts/", include("allauth.urls")),
     # Organization creation and management

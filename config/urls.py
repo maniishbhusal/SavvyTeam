@@ -12,15 +12,13 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path(
         "",
-        login_required(TemplateView.as_view(template_name="pages/home.html")),
-        name="home",
+        login_required(
+            TemplateView.as_view(template_name="pages/tenant-dashboard.html"),
+        ),
+        name="tenant-dashboard",
     ),
     # Django Admin for tenant
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management within tenant
-    path("users/", include("savvyteam.users.urls", namespace="users")),
-    # Authentication redirects
-    path("accounts/", include("allauth.urls")),
     # Tenant-specific features (knowledge base, documents, etc.)
     # Add your tenant apps here
     # Media files
