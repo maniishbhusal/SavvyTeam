@@ -7,6 +7,8 @@ from django.urls import path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
+from savvyteam.organizations.admin import tenant_admin_site
+
 # PUBLIC SCHEMA URLS - Main domain (localhost:8000)
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -17,6 +19,7 @@ urlpatterns = [
     ),
     # Django Admin for public schema
     path(settings.ADMIN_URL, admin.site.urls),
+    path(settings.TENANT_ADMIN_URL, tenant_admin_site.urls),  # custom tenant admin
     # User management within public schema
     path("users/", include("savvyteam.users.urls", namespace="users")),
     # Authentication (signup/login)  # noqa: ERA001
