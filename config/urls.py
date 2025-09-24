@@ -8,29 +8,21 @@ from django.urls import path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
+# TENANT SCHEMA URLS - Subdomains (manish.localhost:8000)
 urlpatterns = [
     path(
         "",
         login_required(TemplateView.as_view(template_name="pages/home.html")),
         name="home",
     ),
-    path(
-        "about/",
-        TemplateView.as_view(template_name="pages/about.html"),
-        name="about",
-    ),
-    # Django Admin, use {% url 'admin:index' %}
+    # Django Admin for tenant
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
+    # User management within tenant
     path("users/", include("savvyteam.users.urls", namespace="users")),
+    # Authentication redirects
     path("accounts/", include("allauth.urls")),
-    # Organizations
-    path(
-        "organizations/",
-        include("savvyteam.organizations.urls", namespace="organizations"),
-    ),
-    # Your stuff: custom urls includes go here
-    # ...
+    # Tenant-specific features (knowledge base, documents, etc.)
+    # Add your tenant apps here
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

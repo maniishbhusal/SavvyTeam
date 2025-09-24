@@ -7,28 +7,23 @@ from django.urls import path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
-from savvyteam.organizations.admin import tenant_admin_site
-
+# PUBLIC SCHEMA URLS - Main domain (localhost:8000)
 urlpatterns = [
-    path(settings.TENANT_ADMIN_URL, tenant_admin_site.urls),  # custom tenant admin
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path(
         "about/",
         TemplateView.as_view(template_name="pages/about.html"),
         name="about",
     ),
-    # Django Admin, use {% url 'admin:index' %}
+    # Django Admin for public schema
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
-    path("users/", include("savvyteam.users.urls", namespace="users")),
+    # Authentication (signup/login)  # noqa: ERA001
     path("accounts/", include("allauth.urls")),
-    # Organizations
+    # Organization creation and management
     path(
         "organizations/",
         include("savvyteam.organizations.urls", namespace="organizations"),
     ),
-    # Your stuff: custom urls includes go here
-    # ...
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
