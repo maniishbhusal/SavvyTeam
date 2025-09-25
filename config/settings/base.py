@@ -59,7 +59,7 @@ DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
 # URLS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
-ROOT_URLCONF = "config.urls"
+ROOT_URLCONF = "config.urls_tenant"
 PUBLIC_SCHEMA_URLCONF = "config.urls_public"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
@@ -125,7 +125,8 @@ AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "users:redirect"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "account_login"
+# LOGIN_URL = "account_login"
+LOGIN_URL = "http://localhost:8000/accounts/login/"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
